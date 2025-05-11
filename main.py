@@ -92,11 +92,9 @@ def submit_solution(webhook_url, auth_token, sql_query):
         return False, str(e)
 
 def main():
-    # Get user registration details
     user_data = get_user_details()
     
     try:
-        # Step 1: Generate webhook
         print("\nConnecting to server to generate webhook...")
         response = requests.post(
             "https://bfhldevapigw.healthrx.co.in/hiring/generateWebhook/PYTHON",
@@ -113,7 +111,6 @@ def main():
         print(f"Webhook URL: {webhook_url[:60]}...")
         print(f"Auth Token: {auth_token[:15]}...")
 
-        # Step 2: Determine which problem to solve
         last_digit = int(user_data["regNo"][-1])
         is_even = last_digit % 2 == 0
         
@@ -129,7 +126,6 @@ def main():
         print(sql_solution.strip())
         print("-"*80)
 
-        # Step 3: Submit solution
         print("\nSubmitting solution to webhook...")
         success, result = submit_solution(webhook_url, auth_token, sql_solution)
         
@@ -150,7 +146,6 @@ def main():
         print(f"\n❌ An unexpected error occurred: {str(e)}")
 
 if __name__ == "__main__":
-    # Verify required package
     try:
         import requests
     except ImportError:
